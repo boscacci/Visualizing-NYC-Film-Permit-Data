@@ -30,14 +30,19 @@ def write_out_csv(permits, usa_zips):
         ## The sample data set I got from the kepler github repo had rows named like so:
         locations_writer.writerow(['tpep_production_datetime','latitude','longitude'])
         omissions = 0
+        print("************ Beep boop initializing ************")
         for permit in permits:
             try:
-                locations_writer.writerow([permit['startdatetime'],usa_zips[permit['zipcode_s'][:5]][0], usa_zips[permit['zipcode_s'][:5]][1]])
+                date = permit['startdatetime']
+                lat = usa_zips[permit['zipcode_s'][:5]][0] ## Skeezily omits non-first zips
+                lon = usa_zips[permit['zipcode_s'][:5]][1]
+                locations_writer.writerow([date,lat, lon])
             except KeyError:
+                print (f"{omissions}: {permit['zipcode_s'][:5]} not in census zips")
                 omissions += 1
-        print(f"\nWriter made {omissions} line omissions.\n")
+        print("**************** CSV has been written :] **********************")
 
-### fn calls
+### Function calls
 
 permits = api_request_json('https://data.cityofnewyork.us/resource/6aka-uima.json')
 usa_zips = get_usa_zips(r'https://goo.gl/oYwpRM')
