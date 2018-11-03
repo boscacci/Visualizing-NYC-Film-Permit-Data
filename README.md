@@ -2,7 +2,7 @@
 
 Tl;dr: Just me tinkering with kepler.gl.
 
-Upload this repo's nyc_film_permits.json to [kepler.gl](kepler.gl) to see a sweet heatmap time-lapse thing of (permitted) film and TV productions in NYC between 2012 and 2016.
+Upload this repo's nyc_film_permits.json to [kepler.gl](http://kepler.gl/#/demo) to see a sweet heatmap time-lapse thing of (permitted) film and TV productions in NYC between 2012 and 2016.
 
 ## Basically
 
