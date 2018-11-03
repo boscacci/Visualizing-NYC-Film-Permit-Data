@@ -2,6 +2,8 @@
 
 Tl;dr: Just me tinkering with kepler.gl.
 
+Upload this repo's nyc_film_permits.json to kepler.gl to see a sweet heatmap time-lapse thing of (permitted) film and TV productions in NYC between 2012 and 2016.
+
 ## Basically
 
 This .py script draws from NYC's open film and TV production permit records. It cross-references each permit's zip code against a Census Bureau directory of all USA zip codes, and provides its corresponding geographic coordinates. It then writes out a .csv with all the rough permit coordinates, which can in turn be uploaded to kepler.gl — to see a fun heatmap or hex-bin visualization of high-profile NYC film production activity!
