@@ -1,2 +1,4 @@
-# kepler_sandbox
-Tinkerings with kepler.gl
+# Boscacci's Kepler.gl Sandbox
+
+Just me tinkering with kepler.gl.
+
