@@ -1,41 +1,44 @@
+import requests, io, csv #,json
 
-# This script will:
-######## 1. Read film permit JSON from NYC Open Data
+## 1. Read film permit JSON from NYC Open Data
 
-import json
-with open('nyc_film_permits.json', 'r') as data:
-    permits = json.load(data)
+def api_request_json(url):
+    api_data = requests.get(url).json()
+    return api_data
 
-#check to see if we got our data in:
-# print(permits)
+## 2. Make dict with key = zip_codes and values = (lat,lon)
 
-# 2. Pull dateTimes from film permit JSON
-
-#dates = [permit['startdatetime'] for permit in permits]
-#print (dates)
-
-# 3. Pull zip codes from film permit JSON
-
-# 4. Pull zip code DB from zip code - lat/lon DB
-import csv
-zip_geo_dict = {}
-with open('us_zips.csv', 'r') as us_zips:
-    reader = csv.reader(us_zips, delimiter = ',')#skipinitialspace=True)
+def get_usa_zips(url):
+    usa_zips = {}
+    census_zip_latlon = io.StringIO(requests.get(url).text)
+    dialect = csv.Sniffer().sniff(census_zip_latlon.read(1024))
+    census_zip_latlon.seek(0)
+    reader = csv.reader(census_zip_latlon, dialect)
     for row in reader:
-        #print(row)
-        zip_geo_dict[row[0]] = (row[1], row[2])
+        usa_zips[row[0]] = (row[1], row[2])
+    return usa_zips
         
-# print(zip_geo_dict['11225'])
-# this zip geo dict is our rosetta stone from zips to lat/lon.
+## 3. Make a CSV file for upload to kepler.gl
 
-# 5. Pair zip from film permit JSON to lat/lon from zip code DB
+def write_out_csv(permits, usa_zips):
+    with open('film_locations.csv', mode='w') as film_locations_file:
+        
+        locations_writer = csv.writer(film_locations_file, delimiter=',', 
+                                                           quotechar='"', 
+                                                           quoting=csv.QUOTE_MINIMAL)
 
+        ## The sample data set I got from the kepler github repo had rows named like so:
+        locations_writer.writerow(['tpep_production_datetime','latitude','longitude'])
+        omissions = 0
+        for permit in permits:
+            try:
+                locations_writer.writerow([permit['startdatetime'],usa_zips[permit['zipcode_s'][:5]][0], usa_zips[permit['zipcode_s'][:5]][1]])
+            except KeyError:
+                omissions += 1
+        print(f"\nWriter made {omissions} line omissions.\n")
 
-with open('film_locations.csv', mode='w') as film_locations_file:
-    locations_writer = csv.writer(film_locations_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    locations_writer.writerow(['tpep_production_datetime','latitude','longitude'])
-    for permit in permits:
-        try:
-            locations_writer.writerow([permit['startdatetime'],zip_geo_dict[permit['zipcode_s'][:5]][0], zip_geo_dict[permit['zipcode_s'][:5]][1]]) # (zip_geo_dict[permit['zipcode_s'][:5]])
-        except KeyError:
-            pass
+### fn calls
+
+permits = api_request_json('https://data.cityofnewyork.us/resource/6aka-uima.json')
+usa_zips = get_usa_zips(r'https://goo.gl/oYwpRM')
+write_out_csv(permits, usa_zips)
