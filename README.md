@@ -6,7 +6,7 @@ Tl;dr: Just me tinkering with kepler.gl.
 
 This .py script draws from NYC's open film and TV production permit records. It cross-references each permit's zip code against a Census Bureau directory of all USA zip codes, and provides its corresponding geographic coordinates. It then writes out a .csv with all the rough permit coordinates, which can in turn be uploaded to kepler.gl — to see a fun heatmap or hex-bin visualization of high-profile NYC film production activity!
 
-## Thought Process
+### Thought Process
 
 [NYC Open Data](https://opendata.cityofnewyork.us/) has an API that provides records of film permits filed between 2012 and 2016. Each record in this list includes information about start date, zip code, and the names of streets reserved by the production.
 
@@ -14,7 +14,7 @@ I wanted to visualize this temporal/geographic data with Kepler. I wanted to see
 
 Unfortunately, Kepler won't accept this text string: "Broadway between 24th and 26th streets" — as a valid geographic coordinate. I think one could figure it out with a tool like [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro), but I was on a deadline to make something presentable, so I just used the zip codes.
 
-## Extra Backstory
+### Extra Backstory
 
 A while back my best friend Mike who happens to be a data scientist told me about Uber's nifty new open-source tool, kepler.gl. It offers super easy data visualization, he said. No programming experience needed, he said. Without any dev skills I was able to check out the demos and do little else.
 
@@ -22,7 +22,7 @@ Now I'm doing the [Flatiron School](https://flatironschool.com/)'s [Data Science
 
 The "filmdata_to_csv.py" in this repo is my first attempt at tossing around data in a fun creative way.
 
-## References:
+### References:
 
 ### Data:
 [NYC Film Permits](https://data.cityofnewyork.us/City-Government/Film-Permits/tg4x-b46p)
