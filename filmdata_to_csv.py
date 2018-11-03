@@ -1,4 +1,4 @@
-import requests, io, csv #,json
+import requests, io, csv
 
 ## 1. Read film permit JSON from NYC Open Data
 
