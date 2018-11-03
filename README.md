@@ -8,9 +8,11 @@ This .py script draws from NYC's open film and TV production permit records. It 
 
 ## Thought Process
 
-[NYC Open Data](https://opendata.cityofnewyork.us/) has an API that provides records of film permits filed between 2012 and 2016. Each record in this list of production permits includes information about each film or TV production's start date, zip code, and the names of streets reserved by the production.
+[NYC Open Data](https://opendata.cityofnewyork.us/) has an API that provides records of film permits filed between 2012 and 2016. Each record in this list includes information about start date, zip code, and the names of streets reserved by the production.
 
-I wanted to visualize this temporal/geographic data with Kepler. Unfortunately, Kepler won't accept this text string: "Broadway between 24th and 26th streets" — as a valid geographic coordinate. I think one could figure it out with a tool like [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro), but I was on a deadline to make something presentable, so I just used the zip codes.
+I wanted to visualize this temporal/geographic data with Kepler. I wanted to see all the film productions as chicken pox on the map of the greater NYC area. 
+
+Unfortunately, Kepler won't accept this text string: "Broadway between 24th and 26th streets" — as a valid geographic coordinate. I think one could figure it out with a tool like [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro), but I was on a deadline to make something presentable, so I just used the zip codes.
 
 ## Extra Backstory
 
